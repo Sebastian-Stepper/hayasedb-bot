@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  discord-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/usr/src/app
+    environment:
+        NODE_ENV: development
+        DISCORD_TOKEN: ${DISCORD_TOKEN}
+        PORTAINER_URL: ${PORTAINER_URL}
+        PORTAINER_TOKEN: ${PORTAINER_TOKEN}
+        CHANNEL_ID: ${CHANNEL_ID}
+        GUILD_ID: ${GUILD_ID}
