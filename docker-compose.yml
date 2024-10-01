@@ -12,6 +12,7 @@ services:
       CHANNEL_ID: ${CHANNEL_ID}
       GUILD_ID: ${GUILD_ID}
     restart: always
+    container_name: HayaseDB-bot
     pull_policy: build
     volumes:
       - data:/app/data
