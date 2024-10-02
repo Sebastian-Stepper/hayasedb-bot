@@ -18,9 +18,9 @@ const EMOJIS = {
 };
 
 const STACK_STATUS = {
-    RUNNING: 'RUNNING',
-    PARTIALLY_RUNNING: 'PARTIALLY_RUNNING',
-    OFFLINE: 'OFFLINE',
+    RUNNING: 'running',
+    PARTIALLY_RUNNING: 'partially running',
+    OFFLINE: 'offline',
 };
 
 module.exports = {
