@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile.dev
     env_file:
       - .env
+      - stack.env
     restart: always
     container_name: HayaseDB-bot
     pull_policy: build
