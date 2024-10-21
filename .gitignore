@@ -1,7 +1,6 @@
 
 /.idea
 /node_modules
-.env
+stack.env
 /data
 package-lock.json
-stack.env
