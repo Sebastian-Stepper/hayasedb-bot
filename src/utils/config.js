@@ -1,7 +1,7 @@
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const GUILD_ID = process.env.GUILD_ID;
 const PORTAINER_STATUS_CHANNEL_ID = process.env.PORTAINER_STATUS_CHANNEL_ID;
-
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const PORTAINER_URL = process.env.PORTAINER_URL;
 const PORTAINER_TOKEN = process.env.PORTAINER_TOKEN;
 
@@ -32,4 +32,5 @@ module.exports = {
     EMBED_COLORS,
     EMOJIS,
     STACK_STATUS,
+    DISCORD_CLIENT_ID
 };
