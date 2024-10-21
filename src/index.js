@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { sendStackUpdates } = require('./tasks/serviceStats');
-const { DISCORD_TOKEN, GUILD_ID, CHANNEL_ID } = require('./config');
+const { DISCORD_TOKEN, GUILD_ID, PORTAINER_STATUS_CHANNEL_ID } = require('./config');
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
@@ -12,7 +12,7 @@ client.login(DISCORD_TOKEN).then(() => {
     client.guilds.fetch(GUILD_ID)
         .then(async (guild) => {
             try {
-                const channel = await guild.channels.fetch(CHANNEL_ID);
+                const channel = await guild.channels.fetch(PORTAINER_STATUS_CHANNEL_ID);
 
                 if (channel) {
                     setInterval(() => sendStackUpdates(channel), 5 * 1000);

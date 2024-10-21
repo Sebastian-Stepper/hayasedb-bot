@@ -8,7 +8,7 @@ services:
       DISCORD_TOKEN: ${DISCORD_TOKEN}
       PORTAINER_URL: ${PORTAINER_URL}
       PORTAINER_TOKEN: ${PORTAINER_TOKEN}
-      CHANNEL_ID: ${CHANNEL_ID}
+      PORTAINER_STATUS_CHANNEL_ID: ${PORTAINER_STATUS_CHANNEL_ID}
       GUILD_ID: ${GUILD_ID}
     restart: always
     container_name: HayaseDB-bot

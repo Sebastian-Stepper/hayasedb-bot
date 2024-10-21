@@ -1,8 +1,10 @@
+
+
 const fs = require('fs');
 const path = require('path');
 const { EmbedBuilder } = require('discord.js');
 const { fetchStacks, fetchContainers } = require('../services/portainerService');
-const { EMBED_COLORS, EMOJIS, STACK_STATUS } = require('../config');
+const { EMBED_COLORS, EMOJIS, STACK_STATUS, PORTAINER_TOKEN, DISCORD_TOKEN, PORTAINER_URL, CHANNEL_ID, GUILD_ID } = require('../config');
 
 const dataDirPath = path.join(__dirname, '../..', 'data');
 const dataFilePath = path.join(dataDirPath, 'stackMessages.json');
@@ -12,6 +14,7 @@ function ensureDataDirExists() {
         fs.mkdirSync(dataDirPath, { recursive: true });
     }
 }
+
 ensureDataDirExists();
 
 function loadStackMessages() {
@@ -26,7 +29,7 @@ function saveStackMessages() {
 }
 let stackMessageMap = {};
 
-loadStackMessages();
+
 
 async function sendStackUpdates(channel) {
     try {
@@ -44,9 +47,9 @@ async function sendStackUpdates(channel) {
             const runningContainers = stackContainers.filter(c => c.state === 'running').length;
             const totalContainers = stackContainers.length;
 
-            const stackStatus = determineStackStatus(totalContainers, runningContainers);
-            const stackEmoji = EMOJIS[stackStatus];
-            const embedColor = EMBED_COLORS[stackStatus];
+            const [stackStatus, stackStatusCode] = determineStackStatus(totalContainers, runningContainers);
+            const stackEmoji = EMOJIS[stackStatusCode];
+            const embedColor = EMBED_COLORS[stackStatusCode];
 
             const embed = createStackEmbed(stack, stackStatus, runningContainers, totalContainers, stackContainers, stackEmoji, embedColor);
 
@@ -61,6 +64,7 @@ async function sendStackUpdates(channel) {
 
         saveStackMessages();
     } catch (err) {
+        console.log(err);
     }
 }
 
@@ -78,29 +82,43 @@ function createContainerMap(containers) {
 
 function determineStackStatus(totalContainers, runningContainers) {
     if (totalContainers === 0) {
-        return STACK_STATUS.OFFLINE;
+        return [STACK_STATUS.OFFLINE, 'OFFLINE'];
     } else if (runningContainers === totalContainers) {
-        return STACK_STATUS.RUNNING;
+        return [STACK_STATUS.RUNNING, 'RUNNING'];
     } else {
-        return STACK_STATUS.PARTIALLY_RUNNING;
+        return [STACK_STATUS.PARTIALLY_RUNNING, 'PARTIALLY_RUNNING'];
     }
 }
 
+
 function createStackEmbed(stack, stackStatus, runningContainers, totalContainers, stackContainers, stackEmoji, embedColor) {
+    console.log(stackStatus);
+
+    const generalInfo = `**Status:** ${stackStatus}\n` +
+        `**Containers:** ${runningContainers}/${totalContainers}`;
+
+    const containerInfo = stackContainers.length > 0
+        ? stackContainers.map(c => {
+            const containerEmoji = c.state === 'running' ? '🟢' : '🔴';
+            return `- ${containerEmoji} **${c.name}**`;
+        }).join('\n')
+        : 'No containers found.';
+
     return new EmbedBuilder()
         .setTitle(`${stackEmoji} **${stack.Name || 'Unknown Stack'}**`)
         .setColor(embedColor)
-        .setDescription(`**Status:** ${stackStatus}\n` +
-            `**Containers:** ${runningContainers}/${totalContainers}`)
-        .addFields({
-            name: 'Services:',
-            value: stackContainers.length > 0
-                ? stackContainers.map(c => {
-                    const containerEmoji = c.state === 'running' ? '🟢' : '🔴';
-                    return `- ${containerEmoji} **${c.name}**`;
-                }).join('\n')
-                : 'No containers found.',
-        })
+        .addFields(
+            {
+                name: 'General Information',
+                value: generalInfo,
+                inline: true
+            },
+            {
+                name: 'Containers',
+                value: containerInfo,
+                inline: true
+            }
+        )
         .setTimestamp();
 }
 

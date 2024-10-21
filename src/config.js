@@ -1,6 +1,6 @@
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const GUILD_ID = process.env.GUILD_ID;
-const CHANNEL_ID = process.env.CHANNEL_ID;
+const PORTAINER_STATUS_CHANNEL_ID = process.env.PORTAINER_STATUS_CHANNEL_ID;
 
 const PORTAINER_URL = process.env.PORTAINER_URL;
 const PORTAINER_TOKEN = process.env.PORTAINER_TOKEN;
@@ -26,7 +26,7 @@ const STACK_STATUS = {
 module.exports = {
     DISCORD_TOKEN,
     GUILD_ID,
-    CHANNEL_ID,
+    PORTAINER_STATUS_CHANNEL_ID,
     PORTAINER_URL,
     PORTAINER_TOKEN,
     EMBED_COLORS,
