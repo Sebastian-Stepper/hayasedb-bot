@@ -9,9 +9,6 @@ services:
     restart: always
     container_name: HayaseDB-bot
     pull_policy: build
-    volumes:
-      - ./src:/app/src
-
 
   mongo:
     image: mongo:latest
