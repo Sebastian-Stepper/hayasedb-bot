@@ -2,7 +2,7 @@
 const { EmbedBuilder } = require('discord.js');
 const axios = require('axios');
 const { EMBED_COLORS, EMOJIS, STACK_STATUS, PORTAINER_TOKEN, PORTAINER_URL } = require('../utils/config');
-const Embed = require('../models/Embed');
+const Embed = require('../models/PortainerStacks');
 
 
 async function fetchStacks() {
@@ -34,6 +34,8 @@ async function fetchContainers() {
 
 async function sendStackUpdates(channel) {
     try {
+        await cleanUpUnknownEmbeds(channel);
+
         const stacks = await fetchStacks();
         const containers = await fetchContainers();
 
@@ -68,20 +70,50 @@ async function sendStackUpdates(channel) {
                         const newEmbed = new Embed({
                             stackId: stack.Id,
                             messageId: newMessage.id,
+                            channelId: channel.id,
+                            guildId: channel.guild.id,
                         });
                         await newEmbed.save();
-                    } 
+                    }
                 }
             } else {
                 const newMessage = await channel.send({ embeds: [embed] });
                 const newEmbed = new Embed({
                     stackId: stack.Id,
                     messageId: newMessage.id,
+                    channelId: channel.id,
+                    guildId: channel.guild.id,
                 });
                 await newEmbed.save();
             }
         }
     } catch (err) {
+        console.error('Error sending stack updates:', err);
+    }
+}
+
+
+async function cleanUpUnknownEmbeds(channel) {
+    try {
+        const messages = await channel.messages.fetch({ limit: 100 });
+
+        for (const message of messages.values()) {
+            if (message.author.id === channel.client.user.id) {
+                if (message.embeds.length === 0) {
+                    await message.delete();
+                    console.log(`Deleted unknown message from bot: ${message.id}`);
+                } else {
+                    const embedEntry = await Embed.findOne({ messageId: message.id });
+
+                    if (!embedEntry) {
+                        await message.delete();
+                        console.log(`Deleted unknown embed message from bot: ${message.id}`);
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error cleaning up unknown embeds:', error);
     }
 }
 

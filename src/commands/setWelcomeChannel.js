@@ -9,6 +9,7 @@ module.exports = {
             option.setName('channel')
                 .setDescription('The channel to set as the welcome channel')
                 .setRequired(true)),
+    adminOnly: true,
     async execute(interaction) {
         const channelId = interaction.options.getChannel('channel').id;
 

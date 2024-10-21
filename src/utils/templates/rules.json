@@ -1,0 +1,39 @@
+{
+  "title": "📜 HayaseDB Open Source Project Rules",
+  "description": "Welcome to the official HayaseDB Discord! This server is focused on the development and collaboration around the HayaseDB open-source database project. Please read the rules below and react to accept them.",
+  "fields": [
+    {
+      "name": "1. Be Respectful",
+      "value": "Treat everyone with respect. Harassment, personal attacks, and toxic behavior are not tolerated. Keep discussions professional and constructive."
+    },
+    {
+      "name": "2. Focus on HayaseDB",
+      "value": "Conversations should primarily center around HayaseDB development, issues, and usage. Off-topic discussions should be kept to designated channels to ensure a productive environment."
+    },
+    {
+      "name": "3. Promote Your Open Source Work",
+      "value": "Feel free to share and promote your **own open source projects** here! We encourage collaboration and making connections with like minded developers. Just make sure your project aligns with open source principles, and **no scams or misleading promotions**."
+    },
+    {
+      "name": "4. No Hate Speech or Discrimination",
+      "value": "We do not tolerate any hate speech, harassment, or discriminatory behavior. A welcoming space for all developers and contributors is a priority."
+    },
+    {
+      "name": "5. Stay on Topic",
+      "value": "Use the appropriate channels for specific discussions (e.g., discussions, ideas). Keeping topics organized ensures efficient communication and development."
+    },
+    {
+      "name": "6. No Spamming or Unrelated Ads",
+      "value": "While promoting your open source work is welcome, **spamming or advertising unrelated services** is prohibited. Always ask a moderator if you're unsure about what’s appropriate to share."
+    },
+    {
+      "name": "7. Follow Discord's Terms and Conditions",
+      "value": "Ensure that both your behavior and any shared projects comply with Discord's [Terms of Service](https://discord.com/terms). This includes avoiding any illegal content or activities related to your projects."
+    },
+    {
+      "name": "8. Report Issues Constructively",
+      "value": "When reporting bugs or issues with HayaseDB, provide as much detail as possible to help others troubleshoot and resolve the problem efficiently."
+    }
+  ],
+  "footer": "React with ✅ to accept the rules and join the HayaseDB development community."
+}

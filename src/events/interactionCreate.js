@@ -1,3 +1,5 @@
+const { PermissionsBitField } = require('discord.js');
+
 module.exports = {
     name: 'interactionCreate',
     once: false,
@@ -9,6 +11,10 @@ module.exports = {
         if (!command) {
             console.error(`No command matching ${interaction.commandName} was found.`);
             return;
+        }
+
+        if (command.adminOnly && !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
+            return interaction.reply({ content: 'You do not have permission to use this command.', ephemeral: true });
         }
 
         try {
