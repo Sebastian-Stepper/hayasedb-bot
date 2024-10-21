@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_DATABASE } = process.env;
+const { MONGO_INITDB_ROOT_USERNAME, MONGO_INITDB_ROOT_PASSWORD, MONGO_INITDB_DATABASE } = process.env;
 const connectToMongoDB = async () => {
   try {
-    await mongoose.connect(`mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@mongo:27017/${MONGO_DATABASE}`, {
+    await mongoose.connect(`mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/${MONGO_INITDB_DATABASE}`, {
       retryWrites: true,
       writeConcern: { w: 'majority' },
       authSource: 'admin'

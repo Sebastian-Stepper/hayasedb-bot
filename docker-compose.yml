@@ -21,10 +21,8 @@ services:
       - "27018:27017"
     volumes:
       - mongo-data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    env_file:
+      - stack.env
     attach: false
 
 volumes:

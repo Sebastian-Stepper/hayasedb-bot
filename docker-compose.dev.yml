@@ -15,14 +15,12 @@ services:
     image: mongo:latest
     container_name: HayaseDB-bot-db
     restart: always
+    env_file:
+      - stack.env
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     attach: false
 
 volumes:
