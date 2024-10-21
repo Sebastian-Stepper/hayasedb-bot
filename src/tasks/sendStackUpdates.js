@@ -1,18 +1,24 @@
 const { sendStackUpdates } = require('../services/portainerService');
+const Config = require('../models/Config');
 
 module.exports = {
     runInterval: 30 * 1000,
-    run(client) {
-        const channel = client.channels.cache.get(process.env.PORTAINER_STATUS_CHANNEL_ID);
+    async run(client) {
+        const config = await Config.findOne({ key: 'portainerStatusChannel' });
+        const channelId = config ? config.value : null;
 
-        if (channel) {
-            sendStackUpdates(channel)
-                .catch(() => {});
+        if (channelId) {
+            const channel = client.channels.cache.get(channelId);
 
-            setInterval(() => {
+            if (channel) {
                 sendStackUpdates(channel)
                     .catch(() => {});
-            }, this.runInterval);
+
+                setInterval(() => {
+                    sendStackUpdates(channel)
+                        .catch(() => {});
+                }, this.runInterval);
+            }
         }
     },
 };
