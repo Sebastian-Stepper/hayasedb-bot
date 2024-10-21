@@ -1,31 +1,22 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-const { sendStackUpdates } = require('./tasks/serviceStats');
-const { DISCORD_TOKEN, GUILD_ID, PORTAINER_STATUS_CHANNEL_ID } = require('./config');
+const { DISCORD_TOKEN } = require('./utils/config');
+const loadEvents = require('./utils/eventLoader');
+const loadTasks = require('./utils/taskLoader');
 
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
 });
+const connectToMongoDB = require('./utils/db');
 
-client.login(DISCORD_TOKEN).then(() => {
-    console.log(`Logged in as ${client.user.tag}`);
+connectToMongoDB();
+loadEvents(client);
 
-    client.guilds.fetch(GUILD_ID)
-        .then(async (guild) => {
-            try {
-                const channel = await guild.channels.fetch(PORTAINER_STATUS_CHANNEL_ID);
+loadTasks(client);
 
-                if (channel) {
-                    setInterval(() => sendStackUpdates(channel), 5 * 1000);
-                } else {
-                    console.error('Channel not found in the guild.');
-                }
-            } catch (err) {
-                console.error('Error fetching channel:', err);
-            }
-        })
-        .catch(err => {
-            console.error('Failed to fetch guild:', err);
-        });
-}).catch(err => {
-    console.error('Failed to log in to Discord:', err);
-});
+client.login(DISCORD_TOKEN)
+    .then(() => {
+        console.log(`Logged in as ${client.user.tag}`);
+    })
+    .catch(err => {
+        console.error('Failed to log in to Discord:', err);
+    });

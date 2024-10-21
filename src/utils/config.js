@@ -14,12 +14,12 @@ const EMBED_COLORS = {
 const EMOJIS = {
     RUNNING: '🟢',
     PARTIALLY_RUNNING: '⚠️',
-    OFFLINE: '🚫',
+    OFFLINE: '🔴',
 };
 
 const STACK_STATUS = {
     RUNNING: 'running',
-    PARTIALLY_RUNNING: 'partially running',
+    PARTIALLY_RUNNING: 'in part',
     OFFLINE: 'offline',
 };
 
