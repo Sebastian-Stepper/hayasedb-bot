@@ -44,10 +44,17 @@ module.exports = {
             .addFields(originalMessage.embeds[0].fields)
             .setFooter({ text: originalMessage.embeds[0].footer.text.replace('{emoji}', emoji) });
 
-        await message.react(emoji);
+        const botUserId = interaction.client.user.id;
+        const alreadyReacted = originalMessage.reactions.cache.some(reaction =>
+            reaction.emoji.name === emoji && reaction.users.cache.has(botUserId)
+        );
+
+        if (!alreadyReacted) {
+            await originalMessage.react(emoji);
+        }
 
         const rulesConfig = new Rules({
-            embedId: message.id,
+            embedId: originalMessage.id,
             channelId: channel.id,
             guildId: interaction.guild.id,
             reactions: [
