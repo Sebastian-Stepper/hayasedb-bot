@@ -16,20 +16,16 @@ async function validateRulesEmbeds(client) {
                     } catch (error) {
                         if (error.code === 10008) {
                             await Rules.deleteOne({ _id: entry._id });
-                            console.log(`Removed invalid rules entry with embedId: ${embedId}`);
                         }
                     }
                 } else {
                     await Rules.deleteOne({ _id: entry._id });
-                    console.log(`Removed invalid rules entry with embedId: ${embedId} due to missing channel.`);
                 }
             } else {
                 await Rules.deleteOne({ _id: entry._id });
-                console.log(`Removed invalid rules entry with embedId: ${embedId} due to missing guild.`);
             }
         }
 
-        console.log('Validation of rules embeds completed.');
     } catch (error) {
         console.error('Error validating rules embeds:', error);
     }
@@ -53,22 +49,17 @@ async function validatePortainerStacksEmbeds(client) {
                     } catch (error) {
                         if (error.code === 10008) {
                             await PortainerStacks.deleteOne({ _id: entry._id });
-                            console.log(`Removed invalid portainer stack entry with messageId: ${messageId}`);
                         }
                     }
                 } else {
                     await PortainerStacks.deleteOne({ _id: entry._id });
-                    console.log(`Removed invalid portainer stack entry with messageId: ${messageId} due to missing channel.`);
                 }
             } else {
                 await PortainerStacks.deleteOne({ _id: entry._id });
-                console.log(`Removed invalid portainer stack entry with messageId: ${messageId} due to missing guild.`);
             }
         }
 
-        console.log('Validation of portainer stacks embeds completed.');
     } catch (error) {
-        console.error('Error validating portainer stacks embeds:', error);
     }
 }
 

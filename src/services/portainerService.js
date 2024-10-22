@@ -101,13 +101,11 @@ async function cleanUpUnknownEmbeds(channel) {
             if (message.author.id === channel.client.user.id) {
                 if (message.embeds.length === 0) {
                     await message.delete();
-                    console.log(`Deleted unknown message from bot: ${message.id}`);
                 } else {
                     const embedEntry = await Embed.findOne({ messageId: message.id });
 
                     if (!embedEntry) {
                         await message.delete();
-                        console.log(`Deleted unknown embed message from bot: ${message.id}`);
                     }
                 }
             }

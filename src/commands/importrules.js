@@ -45,27 +45,41 @@ module.exports = {
             .setFooter({ text: originalMessage.embeds[0].footer.text.replace('{emoji}', emoji) });
 
         const botUserId = interaction.client.user.id;
-        const alreadyReacted = originalMessage.reactions.cache.some(reaction =>
-            reaction.emoji.name === emoji && reaction.users.cache.has(botUserId)
-        );
 
-        if (!alreadyReacted) {
-            await originalMessage.react(emoji);
+        const existingReactions = originalMessage.reactions.cache;
+
+        for (const reaction of existingReactions.values()) {
+            if (reaction.users.cache.has(botUserId)) {
+                if (reaction.emoji.name !== emoji) {
+                    await reaction.users.remove(botUserId);
+                }
+            }
         }
 
-        const rulesConfig = new Rules({
-            embedId: originalMessage.id,
-            channelId: channel.id,
-            guildId: interaction.guild.id,
-            reactions: [
-                {
+        await originalMessage.react(emoji);
+
+        let rulesConfig = await Rules.findOne({ embedId: originalMessage.id });
+
+        if (rulesConfig) {
+            rulesConfig.channelId = channel.id;
+            rulesConfig.guildId = interaction.guild.id;
+            rulesConfig.reactions = [{
+                emoji: emoji,
+                roleId: role.id,
+            }];
+            await rulesConfig.save();
+        } else {
+            rulesConfig = new Rules({
+                embedId: originalMessage.id,
+                channelId: channel.id,
+                guildId: interaction.guild.id,
+                reactions: [{
                     emoji: emoji,
                     roleId: role.id,
-                },
-            ],
-        });
-
-        await rulesConfig.save();
+                }],
+            });
+            await rulesConfig.save();
+        }
 
         await interaction.reply(`Imported rules posted in ${channel} with the ${emoji} emoji for role assignment.`);
     },

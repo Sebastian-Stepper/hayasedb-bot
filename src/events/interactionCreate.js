@@ -4,6 +4,8 @@ module.exports = {
     name: 'interactionCreate',
     once: false,
     async execute(interaction, client) {
+        if (interaction.user.id === client.user.id) return;
+
         if (!interaction.isCommand()) return;
 
         const command = client.commands.get(interaction.commandName);
@@ -13,7 +15,7 @@ module.exports = {
             return;
         }
 
-        if (command.adminOnly && !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
+        if (command.adminOnly && !interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
             return interaction.reply({ content: 'You do not have permission to use this command.', ephemeral: true });
         }
 
