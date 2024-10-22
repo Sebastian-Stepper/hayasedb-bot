@@ -44,7 +44,6 @@ module.exports = {
             .addFields(originalMessage.embeds[0].fields)
             .setFooter({ text: originalMessage.embeds[0].footer.text.replace('{emoji}', emoji) });
 
-        const message = await channel.send({ embeds: [rulesEmbed] });
         await message.react(emoji);
 
         const rulesConfig = new Rules({
