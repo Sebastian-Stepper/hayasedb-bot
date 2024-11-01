@@ -1,30 +1,11 @@
-[
-  {
-    "name": "Discord",
-    "url": "https://dc.hayasedb.com"
-  },
-  {
-    "name": "GitHub",
-    "url": "https://github.hayasedb.com"
-  },
-  {
-    "name": "Website",
-    "url": "https://hayasedb.com"
-  },
-  {
-    "name": "Demo",
-    "url": "https://web.hayasedb.com"
-  },
-  {
-    "name": "Instagram",
-    "url": "https://instagram.hayasedb.com"
-  },
-  {
-    "name": "X",
-    "url": "https://x.hayasedb.com"
-  },
-  {
-    "name": "TikTok",
-    "url": "https://TikTok.hayasedb.com"
-  }
-]
+{
+  "title": "Useful Links",
+  "description": "Here are some useful links for our project.",
+  "color": "#0099ff",
+  "fields": [
+    {
+      "name": "Links",
+      "value": "[Discord](https://dc.hayasedb.com)\n[GitHub](https://github.hayasedb.com)\n[Website](https://hayasedb.com)\n[Uptime Status](https://status.hayasedb.com)\n[Demo](https://web.hayasedb.com)\n[Instagram](https://instagram.hayasedb.com)\n[X](https://x.hayasedb.com)\n[TikTok](https://TikTok.hayasedb.com)"
+    }
+  ]
+}

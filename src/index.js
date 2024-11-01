@@ -15,7 +15,6 @@ const client = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
 });
 const connectToMongoDB = require('./utils/db');
-const {validateRulesEmbeds, validatePortainerStacksEmbeds} = require("./utils/cleanup");
 client.commands = new Collection();
 
 connectToMongoDB();
@@ -25,11 +24,8 @@ loadEvents(client);
 loadTasks(client);
 loadCommands(client);
 registerCommands(client);
-
 client.login(DISCORD_TOKEN)
     .then(async () => {
-        await validateRulesEmbeds(client);
-        await validatePortainerStacksEmbeds(client);
         console.log(`Logged in as ${client.user.tag}`);
     })
     .catch(err => {
