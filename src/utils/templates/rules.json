@@ -2,6 +2,9 @@
     "title": "📜 HayaseDB Discord Rules",
     "description": "Welcome to the official HayaseDB Discord! This server is focused on the development and collaboration around the HayaseDB open-source database project. Please read the rules below and react to accept them.",
     "color": "#0099ff",
+    "thumbnail": {
+      "url": "https://i.ibb.co/vV7h773/Hayase-DB-banner-final-light-waves.png"
+    },
     "fields": [
       {
         "name": "1. Be Respectful",
