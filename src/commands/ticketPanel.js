@@ -16,6 +16,7 @@ module.exports = {
             .setDescription('Select the category for closed ticket channels')
             .addChannelTypes(4)
             .setRequired(true)),
+    adminOnly: true,
 
     async execute(interaction) {
         const ticketCategory = interaction.options.getChannel('ticketcategory');
