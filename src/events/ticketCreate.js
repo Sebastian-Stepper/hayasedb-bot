@@ -1,4 +1,4 @@
-const { Events, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Events, PermissionsBitField, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const Config = require('../models/Config');
 const fs = require('fs');
 const path = require('path');
@@ -123,7 +123,7 @@ module.exports = {
             try {
                 const config = await Config.findOne({ key: 'ticketCategoryId' });
                 const ticketsCategoryId = config ? config.value : null;
-
+        
                 const ticketChannel = await interaction.guild.channels.create({
                     name: `ticket-${interaction.user.username}-${selectedType}`,
                     type: 0,
@@ -149,9 +149,9 @@ module.exports = {
                     case 'development_help':
                         embedDescription = `Hello ${interaction.user.username}, this is your support ticket for Development Help. Please specify the technical coding issue you are facing.`;
                         break;
-                        case 'application':
-                            embedDescription = `Hello ${interaction.user.username}, this is your support ticket for Applications. Please share your skills, experience, and answer the following questions:\n\n- What position are you applying for?\n- How did you find us?\n- What relevant experience do you have in this field?\n- Have you worked with any specific tools or technologies related to this position?\n- What challenges have you faced in past projects, and how did you overcome them?\n- Do you have any questions about the application process?`;
-                            break;                        
+                    case 'application':
+                        embedDescription = `Hello ${interaction.user.username}, this is your support ticket for Applications. Please share your skills, experience, and answer the following questions:\n\n- What position are you applying for?\n- How did you find us?\n- What relevant experience do you have in this field?\n- Have you worked with any specific tools or technologies related to this position?\n- What challenges have you faced in past projects, and how did you overcome them?\n- Do you have any questions about the application process?`;
+                        break;                        
                     case 'other':
                         embedDescription = `Hello ${interaction.user.username}, this is your support ticket for Other. Please specify the type of other issue you have (e.g., copyright claims, legal matters).`;
                         break;
@@ -173,6 +173,32 @@ module.exports = {
         
                 await ticketChannel.send({ embeds: [ticketEmbed], components: [row] });
         
+                const newSelectMenu = new StringSelectMenuBuilder()
+                    .setCustomId('ticket_type')
+                    .setPlaceholder('Select a ticket type')
+                    .addOptions([
+                        {
+                            label: 'General Help',
+                            value: 'general_help',
+                        },
+                        {
+                            label: 'Development Help',
+                            value: 'development_help',
+                        },
+                        {
+                            label: 'Application',
+                            value: 'application',
+                        },
+                        {
+                            label: 'Other',
+                            value: 'other',
+                        },
+                    ]);
+        
+                const newRow = new ActionRowBuilder().addComponents(newSelectMenu);
+        
+                await interaction.message.edit({ components: [newRow] });
+                
                 await interaction.reply({ content: `Ticket created for ${selectedType}: ${ticketChannel}`, ephemeral: true });
             } catch (error) {
                 console.error(error);

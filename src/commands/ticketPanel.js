@@ -30,11 +30,6 @@ module.exports = {
             .setPlaceholder('Select a ticket type')
             .addOptions([
                 {
-                    label: 'Select a ticket type',
-                    description: 'Choose this to reset the selection',
-                    value: 'select_type',
-                },
-                {
                     label: 'General Help',
                     value: 'general_help',
                 },
