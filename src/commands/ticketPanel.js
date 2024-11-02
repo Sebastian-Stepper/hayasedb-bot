@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
+const { ActionRowBuilder, StringSelectMenuBuilder, EmbedBuilder } = require('discord.js');
 const Config = require('../models/Config');
 
 module.exports = {
@@ -21,10 +21,9 @@ module.exports = {
         const ticketCategory = interaction.options.getChannel('ticketcategory');
         const closedCategory = interaction.options.getChannel('closedcategory');
 
-        const embed = {
-            title: 'Support Ticket System',
-            description: 'Select a ticket type below to create a ticket.',
-        };
+        const embed = new EmbedBuilder()
+            .setTitle('Support Ticket System')
+            .setDescription('Select a ticket type below to create a ticket.');
 
         const ticketTypeSelectMenu = new StringSelectMenuBuilder()
             .setCustomId('ticket_type')
@@ -59,6 +58,8 @@ module.exports = {
         await Config.findOneAndUpdate({ key: 'ticketCategoryId' }, { value: ticketCategory.id }, { upsert: true });
         await Config.findOneAndUpdate({ key: 'closedTicketsCategoryId' }, { value: closedCategory.id }, { upsert: true });
 
-        await interaction.reply({ embeds: [embed], components: [row] });
+        await interaction.channel.send({ embeds: [embed], components: [row] });
+        
+        await interaction.deferReply({ ephemeral: true });
     },
 };
