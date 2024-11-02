@@ -60,6 +60,6 @@ module.exports = {
 
         await interaction.channel.send({ embeds: [embed], components: [row] });
         
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.reply({ content: 'Ticket panel has been created successfully!', ephemeral: true });
     },
 };
