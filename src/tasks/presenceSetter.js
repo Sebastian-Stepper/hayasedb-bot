@@ -38,7 +38,6 @@ module.exports = {
         const enableStatusUpdate = config && config.value === 'true';
 
         if (!enableStatusUpdate) {
-            console.log("Clearing status as updates are disabled.");
             client.user.setPresence({
                 activities: [],
                 status: 'online',
