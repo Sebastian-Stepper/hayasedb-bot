@@ -6,7 +6,7 @@ const Embed = require('../models/Embed');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('sendembed')
-        .setDescription('Send an embed from a selected JSON file to a specified channel.')
+        .setDescription('Send an embed from a selected Template file to a specified channel.')
         .addStringOption(option =>
             option.setName('jsonfile')
                 .setDescription('The name of the JSON file to use.')
